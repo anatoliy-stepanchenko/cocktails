@@ -1,10 +1,12 @@
 <template>
   <div class="root">
-    <div
-      :style="`background-image: url(${cocktail.strDrinkThumb})`"
-      class="picture"
-    ></div>
-    <div class="name">{{ cocktail.strDrink }}</div>
+    <RouterLink :to="`cocktails/${cocktail.idDrink}`">
+      <div
+        :style="`background-image: url(${cocktail.strDrinkThumb})`"
+        class="picture"
+      ></div>
+      <div class="name">{{ cocktail.strDrink }}</div>
+    </RouterLink>
   </div>
 </template>
 

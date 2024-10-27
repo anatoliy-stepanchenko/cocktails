@@ -100,10 +100,11 @@ function getCocktails() {
 
     .cocktails-by-ingredient {
       display: flex;
+      row-gap: 2rem;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      max-height: 600px;
+      max-height: 550px;
       margin-top: 50px;
       overflow-y: auto;
     }
