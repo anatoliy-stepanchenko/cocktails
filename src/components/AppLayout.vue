@@ -29,6 +29,7 @@ const props = defineProps({
 
 .img {
   width: 50%;
+  // max-height: 100vh;
   background-position: 50% 50%;
   background-repeat: no-repeat;
   background-size: cover;

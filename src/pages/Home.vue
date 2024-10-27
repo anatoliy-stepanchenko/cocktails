@@ -1,19 +1,19 @@
 <template>
   <AppLayout imgUrl="/src/assets/img/bg-1.jpg">
     <div class="wrapper">
-      <div class="info">
+      <div v-if="!ingredient || !cocktails" class="info">
         <div class="title">Choose your drink</div>
         <div class="line"></div>
         <div class="select-wrapper">
           <el-select
-            v-model="ingridient"
+            v-model="ingredient"
             placeholder="Choose main ingredient"
             class="select"
             size="large"
             @change="getCocktails"
           >
             <el-option
-              v-for="item in ingridients"
+              v-for="item in ingredients"
               :key="item.strIngredient1"
               :label="item.strIngredient1"
               :value="item.strIngredient1"
@@ -30,6 +30,17 @@
           class="cocktails"
         />
       </div>
+      <div v-else class="info">
+        <div class="title">COCKTAILS WITH {{ ingredient }}</div>
+        <div class="line"></div>
+        <div class="cocktails-by-ingredient">
+          <CocktailThumb
+            v-for="cocktail in cocktails"
+            :key="cocktail.idDrink"
+            :cocktail="cocktail"
+          />
+        </div>
+      </div>
     </div>
   </AppLayout>
 </template>
@@ -38,17 +49,18 @@
 import { ref } from "vue";
 import { storeToRefs } from "pinia";
 import AppLayout from "../components/AppLayout.vue";
+import CocktailThumb from "../components/CocktailThumb.vue";
 import { useRootStore } from "@/stores/root";
 
 const rootStore = useRootStore();
 rootStore.getIngredients();
 
-const { ingridients, cocktails } = storeToRefs(rootStore);
+const { ingredients, cocktails } = storeToRefs(rootStore);
 
-const ingridient = ref(null);
+const ingredient = ref(null);
 
 function getCocktails() {
-  rootStore.getCocktails(ingridient.value);
+  rootStore.getCocktails(ingredient.value);
 }
 </script>
 
@@ -84,6 +96,16 @@ function getCocktails() {
 
     .cocktails {
       margin-top: 60px;
+    }
+
+    .cocktails-by-ingredient {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      max-height: 600px;
+      margin-top: 50px;
+      overflow-y: auto;
     }
   }
 }
