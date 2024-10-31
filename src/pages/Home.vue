@@ -6,9 +6,11 @@
         <div class="line"></div>
         <div class="select-wrapper">
           <el-select
-            v-model="ingredient"
+            v-model="rootStore.ingredient"
             placeholder="Choose main ingredient"
             class="select"
+            filterable
+            allow-create
             size="large"
             @change="getCocktails"
           >
@@ -46,7 +48,6 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
 import { storeToRefs } from "pinia";
 import AppLayout from "../components/AppLayout.vue";
 import CocktailThumb from "../components/CocktailThumb.vue";
@@ -55,59 +56,46 @@ import { useRootStore } from "@/stores/root";
 const rootStore = useRootStore();
 rootStore.getIngredients();
 
-const { ingredients, cocktails } = storeToRefs(rootStore);
-
-const ingredient = ref(null);
+const { ingredients, ingredient, cocktails } = storeToRefs(rootStore);
 
 function getCocktails() {
-  rootStore.getCocktails(ingredient.value);
+  rootStore.getCocktails(rootStore.ingredient);
 }
 </script>
 
 <style lang="scss" scoped>
 @use "../assets/styles/main" as *;
 
-.wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.select-wrapper {
+  padding-top: 50px;
 
-  .info {
-    padding: 80px 0;
-    text-align: center;
-
-    .select-wrapper {
-      padding-top: 50px;
-
-      .select {
-        width: 220px;
-        background-color: cadetblue;
-      }
-    }
-
-    .text {
-      max-width: 516px;
-      margin: 0 auto;
-      padding-top: 50px;
-      color: $textMuted;
-      line-height: 36px;
-      letter-spacing: 0.1em;
-    }
-
-    .cocktails {
-      margin-top: 60px;
-    }
-
-    .cocktails-by-ingredient {
-      display: flex;
-      row-gap: 2rem;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      max-height: 550px;
-      margin-top: 50px;
-      overflow-y: auto;
-    }
+  .select {
+    width: 220px;
+    background-color: cadetblue;
   }
+}
+
+.text {
+  max-width: 516px;
+  margin: 0 auto;
+  padding-top: 50px;
+  color: $textMuted;
+  line-height: 36px;
+  letter-spacing: 0.1em;
+}
+
+.cocktails {
+  margin-top: 60px;
+}
+
+.cocktails-by-ingredient {
+  display: flex;
+  row-gap: 2rem;
+  // justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  max-height: 550px;
+  margin-top: 50px;
+  overflow-y: auto;
 }
 </style>
