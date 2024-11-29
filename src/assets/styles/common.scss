@@ -43,3 +43,39 @@ a {
   margin: 32px auto 0;
   background-color: $accent;
 }
+
+.list {
+  width: 560px;
+  padding: 50px 0 80px;
+  text-align: left;
+
+  &-item {
+    position: relative;
+    margin-bottom: 20px;
+    padding-left: 30px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &::before {
+      content: "";
+      width: 17px;
+      height: 17px;
+      background: url("/src/assets/img/heart.svg") no-repeat 50% 50%;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+    }
+  }
+}
+
+.instructions {
+  width: 516px;
+  margin: 0 auto;
+  font-size: 20px;
+  line-height: 30px;
+  letter-spacing: 0.1em;
+  color: $textMuted;
+}
