@@ -2,17 +2,37 @@
   <div class="root">
     <div :style="`background-image: url(${imgUrl})`" class="img"></div>
     <div class="main">
-      <el-button class="btn">Get random cocktail</el-button>
+      <div class="btns">
+        <el-button
+          @click="backFunc"
+          v-if="isBackButtonVisible"
+          type="primary"
+          :icon="Back"
+          circle
+          class="back_btn"
+        />
+        <el-button class="btn">Get random cocktail</el-button>
+      </div>
       <slot></slot>
     </div>
   </div>
 </template>
 
 <script setup>
+import { Back } from "@element-plus/icons-vue";
+
 const props = defineProps({
   imgUrl: {
     type: String,
     requared: true,
+  },
+  backFunc: {
+    type: Function,
+    requared: true,
+  },
+  isBackButtonVisible: {
+    type: Boolean,
+    default: true,
   },
 });
 </script>
@@ -55,6 +75,21 @@ const props = defineProps({
     &:active {
       background-color: color.adjust($accent, $lightness: -15%);
       border-color: color.adjust($accent, $lightness: -15%);
+    }
+  }
+}
+
+.btns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .back_btn {
+    background-color: transparent;
+    border-color: #fff;
+
+    &:hover {
+      border-color: $accent;
     }
   }
 }
