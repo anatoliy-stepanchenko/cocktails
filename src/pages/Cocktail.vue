@@ -1,6 +1,6 @@
 <template>
   <div v-if="cocktail" class="wrap">
-    <AppLayout :imgUrl="cocktail.strDrinkThumb" :backFunc="goBack">
+    <AppLayout :imgUrl="cocktail.strDrinkThumb">
       <div class="wrapper">
         <div class="info">
           <div class="title">{{ cocktail.strDrink }}</div>
@@ -25,14 +25,13 @@
 </template>
 
 <script setup>
-import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 import { computed, ref } from "vue";
 import AppLayout from "../components/AppLayout.vue";
 import axios from "axios";
 import { COCKTAIL_BY_ID } from "@/constants";
 
 const route = useRoute();
-const router = useRouter();
 
 const cocktail = ref(null);
 
@@ -57,10 +56,6 @@ const ingredients = computed(() => {
 async function getCocktail() {
   const data = await axios.get(`${COCKTAIL_BY_ID}${cocktailId.value}`);
   cocktail.value = data?.data?.drinks[0];
-}
-
-function goBack() {
-  router.go(-1);
 }
 
 getCocktail();
